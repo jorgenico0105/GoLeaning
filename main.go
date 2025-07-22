@@ -17,8 +17,24 @@ type Animal struct {
 	Especies string
 	Sonido   string
 }
+type Rect struct {
+	h uint
+	w uint
+}
+type User struct {
+	username string
+	password string
+}
 
+func (user User) getUsername() (string, string) {
+	return user.username, user.password
+}
+func (r Rect) area() uint {
+	return r.h * r.w
+}
 func main() {
+	rec := Rect{h: 10, w: 20}
+	fmt.Println(rec.area())
 	fmt.Println("Hello, World!")
 	//javier := Persona{}
 	nicolas := Persona{
@@ -27,6 +43,13 @@ func main() {
 		Weight:    70.5,
 		SkinColor: "Moreno",
 		mascotas:  []Animal{{Especies: "Perro", Sonido: "Guau"}, {Especies: "Gato", Sonido: "Miau"}},
+	}
+	user := User{username: "nicolas", password: "1234"}
+	user2 := User{username: "javier", password: "5678"}
+	usuarios := []User{user, user2}
+	for i, u := range usuarios {
+		password, username := u.getUsername()
+		fmt.Println("Usuario:", i, "Username:", username, "Password:", password)
 	}
 	fmt.Println("Edad:", nicolas.Age)
 	nicolas.Age = 31
