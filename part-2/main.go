@@ -3,16 +3,26 @@ package main
 import "fmt"
 
 type User struct {
-	id   int
-	name string
+	id    int
+	name  string
+	rol   string
+	roles []string
 }
 
 func main() {
-	usuarios := []User{{name: "Nico", id: 1}, {name: "Juan", id: 2}, {name: "Pedro", id: 3}}
-	mapper := make(map[User]int)
+	usuarios := []User{{name: "Nico", id: 1, rol: "admin"}, {name: "Juan", id: 2, rol: "mecanico"}, {name: "Pedro", id: 3}, {name: "Nico", id: 1, rol: "facturador"}}
+	mapper := make(map[int]User)
 	//Fomra de declarar un map o construit
+	fmt.Println("Usuarios:", usuarios)
 	for _, user := range usuarios {
-		mapper[user] = user.id
+		_, existe := mapper[user.id]
+		if !existe {
+			mapper[user.id] = user
+		}
+
+		u := mapper[user.id]
+		u.roles = append(u.roles, user.rol)
+		mapper[user.id] = u
 	}
 	fmt.Println("Usuarios:", mapper)
 	fmt.Println("This is Class2")
