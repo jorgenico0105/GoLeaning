@@ -36,7 +36,7 @@ func main() {
 	nombres[1] = "Juan"
 	nombres[2] = "Pedro"
 	fmt.Println("Antes de agregar:", numeros)
-	agregar(numeros)
+	agregar(&numeros)
 	fmt.Println("Despues de agregar:", numeros)
 	fmt.Println("Antes de agregar nombres:", nombres)
 	agregarNames(nombres)
@@ -45,11 +45,35 @@ func main() {
 	fmt.Println("Despues de agregar mas numeros:", numeros)
 	_, number2 := testFunction(5, 8)
 	fmt.Println("Number2:", number2)
+	//Higher level functions
+	//
+	suma := higherOrderFunction(1, 2, 3, add)
+	fmt.Println("Suma:", suma)
+	saludo := saludoHigherFunction("Nicolas", greeting)
+	fmt.Println("Saludo:", saludo)
 }
-
-func agregar(numeros []int) {
-	numeros[0] = 1
-	numeros = append(numeros, 15)
+func saludoHigherFunction(name string, callback func(name string) string) string {
+	return callback(name)
+}
+func greeting(name string) string {
+	return "Hola " + name
+}
+func higherOrderFunction(a, b, c int, callback func(a, b int) int) int {
+	a = a + 1
+	return callback(a, b) + c
+}
+func add(a, b int) int {
+	return a + b
+}
+func res(a, b int) int {
+	return a - b
+}
+func mul(a, b int) int {
+	return a * b
+}
+func agregar(numeros *[]int) {
+	(*numeros)[0] = 1
+	*numeros = append(*numeros, 15)
 }
 func agregarNames(names []string) {
 	names = append(names, "Roger")
